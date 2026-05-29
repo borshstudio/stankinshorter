@@ -133,7 +133,7 @@ Stankinshorter/
 
 ## 1. Клонировать репозиторий
 
-git clone https://github.com/username/Stankinshorter.git
+git clone https://github.com/borshstudio/stankinshorter
 
 cd Stankinshorter
 
