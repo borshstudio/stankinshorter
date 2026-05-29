@@ -1,7 +1,7 @@
 services:
   url-shortener:
     build: .
-    container_name: url-shortener
+    container_name: stankinshorter
     ports:
       - "8000:8000"
     environment:

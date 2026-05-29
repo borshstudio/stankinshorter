@@ -8,7 +8,7 @@ from app.database import Database
 from app.storage import UrlStorage
 
 
-app = FastAPI(title="StankinShorter")
+app = FastAPI(title="URL Shortener")
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
@@ -20,14 +20,10 @@ storage = UrlStorage(database, Config.MAX_URLS)
 
 @app.get("/")
 def index(request: Request):
-    """
-    Главная страница.
-    """
-
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "urls": storage.get_all_urls(),
             "base_url": Config.BASE_URL,
             "short_url": None,
@@ -39,15 +35,11 @@ def index(request: Request):
 
 @app.post("/shorten")
 def shorten(request: Request, original_url: str = Form(...)):
-    """
-    Создаёт короткую ссылку.
-    """
-
     if not original_url.startswith("http://") and not original_url.startswith("https://"):
         return templates.TemplateResponse(
+            request,
             "index.html",
             {
-                "request": request,
                 "urls": storage.get_all_urls(),
                 "base_url": Config.BASE_URL,
                 "short_url": None,
@@ -60,9 +52,9 @@ def shorten(request: Request, original_url: str = Form(...)):
     short_url = f"{Config.BASE_URL}/{item.short_code}"
 
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "urls": storage.get_all_urls(),
             "base_url": Config.BASE_URL,
             "short_url": short_url,
@@ -74,10 +66,6 @@ def shorten(request: Request, original_url: str = Form(...)):
 
 @app.get("/{short_code}")
 def redirect_to_original(short_code: str):
-    """
-    Переход по короткой ссылке.
-    """
-
     item = storage.add_click(short_code)
 
     if item is None:
