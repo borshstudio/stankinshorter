@@ -1,0 +1,13 @@
+services:
+  url-shortener:
+    build: .
+    container_name: url-shortener
+    ports:
+      - "8000:8000"
+    environment:
+      MAX_URLS: 5
+      BASE_URL: http://127.0.0.1:8000
+      DB_PATH: /code/data/urls.db
+    volumes:
+      - ./data:/code/data
+    restart: unless-stopped
