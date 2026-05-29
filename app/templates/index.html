@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сокращатель ссылок</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Сокращатель ссылок</h1>
+
+    <p class="limit">
+        Максимальное количество ссылок: {{ max_urls }}
+    </p>
+
+    <form action="/shorten" method="post">
+        <input
+            type="text"
+            name="original_url"
+            placeholder="Введите ссылку, например https://example.com"
+            required
+        >
+
+        <button type="submit">Сократить</button>
+    </form>
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if short_url %}
+        <div class="result">
+            Короткая ссылка:
+            <a href="{{ short_url }}" target="_blank">
+                {{ short_url }}
+            </a>
+        </div>
+    {% endif %}
+
+    <h2>Сохранённые ссылки</h2>
+
+    {% if urls %}
+        <table>
+            <tr>
+                <th>Короткая ссылка</th>
+                <th>Оригинальная ссылка</th>
+                <th>Переходы</th>
+            </tr>
+
+            {% for item in urls %}
+            <tr>
+                <td>
+                    <a href="{{ base_url }}/{{ item.short_code }}" target="_blank">
+                        {{ base_url }}/{{ item.short_code }}
+                    </a>
+                </td>
+
+                <td class="original">
+                    {{ item.original_url }}
+                </td>
+
+                <td>
+                    {{ item.clicks }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Пока ссылок нет.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
