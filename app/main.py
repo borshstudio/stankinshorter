@@ -10,7 +10,10 @@ from app.storage import UrlStorage
 
 app = FastAPI(title="URL Shortener")
 
+
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
 
 templates = Jinja2Templates(directory="app/templates")
 

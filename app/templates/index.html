@@ -2,76 +2,98 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Сокращатель ссылок</title>
+    <title>Stankinshorter</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>Сокращатель ссылок</h1>
-
-    <p class="limit">
-        Максимальное количество ссылок: {{ max_urls }}
-    </p>
-
-    <form method="post" action="/shorten">
-        <input
-            type="text"
-            name="original_url"
-            placeholder="Введите ссылку, например https://example.com"
-            required
-        >
-
-        <button type="submit">Сократить</button>
-    </form>
-
-    {% if error %}
-        <div class="error">
-            {{ error }}
+<header class="header">
+    <div class="logo-block">
+        <img src="/assets/logo.png" alt="Stankinshorter Logo" class="logo">
+        <div>
+            <div class="logo-title">STANKINSHORTER</div>
+            <div class="logo-subtitle">Сокращение ссылок</div>
         </div>
-    {% endif %}
+    </div>
+</header>
 
-    {% if short_url %}
-        <div class="result">
-            Короткая ссылка:
-            <a href="{{ short_url }}" target="_blank">
-                {{ short_url }}
-            </a>
-        </div>
-    {% endif %}
+<main class="main">
+    <section class="hero">
+        <h1>УПРОСТИТЕ ВАШИ<br>ССЫЛКИ СЕЙЧАС.</h1>
 
-    <h2>Сохранённые ссылки</h2>
+        <p class="description">
+            Вставьте длинную ссылку и получите короткий удобный URL.
+        </p>
 
-    {% if urls %}
-        <table>
-            <tr>
-                <th>Короткая ссылка</th>
-                <th>Оригинальная ссылка</th>
-                <th>Переходы</th>
-            </tr>
+        <form method="post" action="/shorten" class="short-form">
+            <input
+                type="text"
+                name="original_url"
+                placeholder="Сократить URL"
+                required
+            >
 
-            {% for item in urls %}
-            <tr>
-                <td>
-                    <a href="{{ base_url }}/{{ item.short_code }}" target="_blank">
-                        {{ base_url }}/{{ item.short_code }}
-                    </a>
-                </td>
+            <button type="submit">Сократить</button>
+        </form>
 
-                <td class="original">
-                    {{ item.original_url }}
-                </td>
+        <p class="limit">
+            Максимальное количество ссылок: {{ max_urls }}
+        </p>
 
-                <td>
-                    {{ item.clicks }}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>Пока ссылок нет.</p>
-    {% endif %}
-</div>
+        {% if error %}
+            <div class="message error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if short_url %}
+            <div class="message result">
+                <span>Короткая ссылка:</span>
+                <a href="{{ short_url }}" target="_blank">
+                    {{ short_url }}
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="links-section">
+        <h2>Сохранённые ссылки</h2>
+
+        {% if urls %}
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Короткая ссылка</th>
+                        <th>Оригинальная ссылка</th>
+                        <th>Переходы</th>
+                    </tr>
+
+                    {% for item in urls %}
+                    <tr>
+                        <td>
+                            <a href="{{ base_url }}/{{ item.short_code }}" target="_blank">
+                                {{ base_url }}/{{ item.short_code }}
+                            </a>
+                        </td>
+
+                        <td class="original">
+                            {{ item.original_url }}
+                        </td>
+
+                        <td class="clicks">
+                            {{ item.clicks }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            <p class="empty">
+                Пока ссылок нет. Создайте первую короткую ссылку.
+            </p>
+        {% endif %}
+    </section>
+</main>
 
 </body>
 </html>

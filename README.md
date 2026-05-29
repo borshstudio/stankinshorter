@@ -15,6 +15,10 @@
   <img src="https://img.shields.io/badge/Docker-Ready-blue" alt="Docker">
 </p>
 
+<p align="center">
+  <img src="./assets/img.png" alt="Stankinshorter Logo">
+</p>
+
 ---
 
 ## Описание проекта
