@@ -18,7 +18,7 @@
 <p align="center">
   <img src="./assets/img.png" alt="Stankinshorter Logo">
 </p>
-
+## Левашов Дмитрий, ИДБ-25-06
 ---
 
 ## Описание проекта
